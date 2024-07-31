@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, request, Request, Response } from 'express';
 import { Users } from '../useCases/user.useCase';
 
 class UserController {
@@ -23,6 +23,9 @@ class UserController {
     } catch (error) {
       next(error);
     }
+  }
+  get(request: Request, response: Response, next: NextFunction) {
+    console.log(request.params);
   }
 }
 export { UserController };
