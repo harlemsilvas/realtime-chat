@@ -1,5 +1,5 @@
 import { sign } from 'jsonwebtoken';
-import { IAuth, ICreate } from '../interfaces/users.interface';
+import { IAuth, ICreate, IPagination } from '../interfaces/users.interface';
 import { UsersRepository } from '../repositories/user.repository';
 import { compare, hash } from 'bcrypt';
 import { HttpException } from '../interfaces/HttpException';
@@ -64,6 +64,10 @@ class Users {
         name: findUser.name,
       },
     };
+  }
+  findAllUsers({ pageNumber, pageSize }: IPagination) {
+    const result = this.usersRepository.findAllUsers({ pageNumber, pageSize });
+    return result;
   }
 }
 export { Users };

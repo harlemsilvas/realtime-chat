@@ -1,25 +1,26 @@
 import { Router } from 'express';
 import { UserController } from '../controllers/user.controller';
 import { authMiddleware } from '../middlewares/auth.middleware';
+import { RoomsController } from '../controllers/rooms.controller';
 
-class UserRoutes {
+class RoomsRoutes {
   public router: Router;
-  private userController = new UserController();
+  private roomsController = new RoomsController();
   constructor() {
     this.router = Router();
     this.getRoutes();
   }
   getRoutes() {
-    this.router.post('/', this.userController.store.bind(this.userController));
     this.router.post(
-      '/auth',
-      this.userController.auth.bind(this.userController)
-    );
-    this.router.get(
       '/',
       authMiddleware,
-      this.userController.getAllUsers.bind(this.userController)
+      this.roomsController.store.bind(this.roomsController)
+    );
+    this.router.get(
+      '/:email',
+      authMiddleware,
+      this.roomsController.show.bind(this.roomsController)
     );
   }
 }
-export { UserRoutes };
+export { RoomsRoutes };

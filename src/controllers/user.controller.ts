@@ -24,8 +24,22 @@ class UserController {
       next(error);
     }
   }
-  get(request: Request, response: Response, next: NextFunction) {
-    console.log(request.params);
+  async getAllUsers(request: Request, response: Response, next: NextFunction) {
+    const { pageSize, pageNumber } = request.query;
+    const DEFULT_PAGE_SIZE = 5;
+    const DEFAULT_PAGE_NUMBER = 1;
+    const number = pageNumber ? Number(pageNumber) : DEFAULT_PAGE_NUMBER;
+    const size = pageSize ? Number(pageSize) : DEFULT_PAGE_SIZE;
+    try {
+      const result = await this.usersUserCase.findAllUsers({
+        pageSize: size,
+        pageNumber: number,
+      });
+
+      return response.status(200).json(result);
+    } catch (error) {
+      next(error);
+    }
   }
 }
 export { UserController };
